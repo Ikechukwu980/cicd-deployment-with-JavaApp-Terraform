@@ -94,6 +94,14 @@ Navigate to manage Jenkins  and click manage plug-ins
 	- Click save and apply
 
 ** Create Credentials for connecting to Kubernetes Cluster using kubeconfig
+   	- After the cluster is created check the cluster
+	- Kubectl get nodes
+	- Get cluster --name demo-eks --region us-east-1
+	- Cat /var/i\lib/jenkins/.kube/config  ** copy and store in a txt-file
+	- Navigate to Jenkins dashboard and click on manage Jenkins
+	- Manage credentials click on add credentials
+	- Select Secret file and select the file we just cpy
+    - Add id and description k8s and k8s
 
 
 ** create Jenkins pipeline
