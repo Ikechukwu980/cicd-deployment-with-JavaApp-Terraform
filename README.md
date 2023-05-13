@@ -7,46 +7,46 @@
 	- Launch the service and login to the instance via SSH
 
 # Step 2 ; installation of required software 
-	- Sudo hostname Jenkins
-	- Sudo apt update
-	- Sudo apt install maven -y
+ `sudo hostname Jenkins`
+ `sudo apt update`
+ `sudo apt install maven -y`
 ** Jenkins setup **
-	- Add Repository key to the system
-	  curl -fsSL https://pkg.jenkins.io/debian/jenkins.io-2023.key | sudo tee \
-	  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+- Add Repository key to the system
+`curl -fsSL https://pkg.jenkins.io/debian/jenkins.io-2023.key | sudo tee \
+/usr/share/keyrings/jenkins-keyring.asc > /dev/null`
 	
-	- Append debian package repo address to the system
-	echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
-	  https://pkg.jenkins.io/debian binary/ | sudo tee \
-	  /etc/apt/sources.list.d/jenkins.list > /dev/null
-	- Sudo apt update 
-	- Sudo apt install Jenkins -y
+Append debian package repo address to the system
+`echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+ https://pkg.jenkins.io/debian binary/ | sudo tee \
+/etc/apt/sources.list.d/jenkins.list > /dev/null`
+ `sudo apt update`
+ `sudo apt install Jenkins -y`
 ** then access the Jenkins server via the server public_dns_name:8080
-	- Get the initial password from the below file
-	sudo cat /var/lib/jenkins/secrets/initialAdminPassword
-	- Copy and paste in the browser
-	- Click install plug-ins
-	- Create username and password 
-	- Click save and finish.
+- Get the initial password from the below file
+`sudo cat /var/lib/jenkins/secrets/initialAdminPassword`
+- Copy and paste in the browser
+- Click install plug-ins
+- Create username and password 
+- Click save and finish.
 
 # Step 3: install AWS CLI 
-       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" 
-       sudo apt install unzip
-       sudo unzip awscliv2.zip  
-       sudo ./aws/install
-      aws --version
+  `curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" `
+   `sudo apt install unzip`
+   `sudo unzip awscliv2.zip`  
+   `sudo ./aws/install`
+   `aws --version`
 
 ** installing EKSCLI **
-           curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-           Move the extracted binary to /usr/local/bin. 
-           sudo mv /tmp/eksctl /usr/local/bin
-           eksctl version
+  `curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp`
+   Move the extracted binary to /usr/local/bin. 
+  `sudo mv /tmp/eksctl /usr/local/bin`
+  `eksctl version`
 
 ** installing Kubectl **
-       sudo curl --silent --location -o /usr/local/bin/kubectl   https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl
+  `sudo curl --silent --location -o /usr/local/bin/kubectl   https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl`
 
 ** To give the kubectl file execution permission
-         sudo chmod +x /usr/local/bin/kubectl .
+  `sudo chmod +x /usr/local/bin/kubectl`
 
 # Step 4: create the EKS cluster with two worker nodes
 	- Sudo su - Jenkins
