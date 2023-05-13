@@ -48,13 +48,13 @@ Append debian package repo address to the system
 ** To give the kubectl file execution permission
   `sudo chmod +x /usr/local/bin/kubectl`
 
-# Step 4: create the EKS cluster with two worker nodes
-	- Sudo su - Jenkins
-	- eksctl create cluster --name demo-eks --region us-east-1 --nodegroup-name my-nodes --node-type t3.small --managed --nodes 2 
-** to verify that your nodes are created **
-	- eksctl get cluster --name demo-eks --region us-east-1
-** update kube config **
-	- aws eks update-kubeconfig --name demo-eks --region us-east-1
+** Install Terraform **
+` wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install terraform `
+
+# Step 
+	- sudo su - Jenkins
 ** to view the kubeconfig file  **
 	- cat  /var/lib/jenkins/.kube/config
 	- Kubectl get nodes               ** view worker nodes **
@@ -64,22 +64,22 @@ Append debian package repo address to the system
 
 # Step 5: installing docker on the Jenkins server
 ** installing docker on the Jenkins server **
-	- Sudo apt install docker.oi -y
-	- Sudo usermod -aG docker $USER
-	- Exit and log back in
-	- Sudo systemctl start docker
-	- Sudo systemctl enable docker
-	- Sudo systemctl status docker
+` sudo apt install docker.io -y `
+` sudo usermod -aG docker $USER `
+ - Exit and log back in
+` sudo systemctl start docker `
+` sudo systemctl enable docker `
+` sudo systemctl status docker `
 
 ** add jenkins user to docker group **
-	- Sudo usermod -a -G docker jenkins
-	- Sudo service jenkins restart 
-	-  sudo systemctl deamon-reload 
-	- sudo service docker stop 
-	-  sudo service docker start  
+` sudo usermod -a -G docker jenkins `
+` sudo service jenkins restart `
+` sudo systemctl daemon-reload `
+` sudo service docker stop `
+` sudo service docker start ` 
 
 # Step 6: install plug-ins inside your Jenkins UI
-         Navigate to manage Jenkins  and click manage plug-ins
+     Navigate to manage Jenkins  and click manage plug-ins
 	- Select Available 
 	- Search for docker( select docker and docker pipeline)
 	- Search for Kubernetes ( Kubernetes cli )
@@ -94,14 +94,15 @@ Append debian package repo address to the system
 	 - Click save and apply
 
 ** Create Credentials for connecting to Kubernetes Cluster using kubeconfig
-   	- After the cluster is created check the cluster
-	- Kubectl get nodes
-	- Get cluster --name demo-eks --region us-east-1
-	- Cat /var/i\lib/jenkins/.kube/config  ** copy and store in a txt-file
-	- Navigate to Jenkins dashboard and click on manage Jenkins
-	- Manage credentials click on add credentials
-	- Select Secret file and select the file we just cpy
-    - Add id and description k8s and k8s
+   	  After the cluster is created check the cluster
+	  `Kubectl get nodes`
+	  Get cluster --name demo-eks --region us-east-1
+	 `cat /var/i\lib/jenkins/.kube/config`
+	  copy and store in a txt-file
+	  Navigate to Jenkins dashboard and click on manage Jenkins
+	  Manage credentials click on add credentials
+	  Select Secret file and select the file we just cpy
+      Add id and description k8s and k8s
 
 
 ** create Jenkins pipeline
