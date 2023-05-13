@@ -1,0 +1,78 @@
+pipeline {
+    agent any
+    
+    tools {
+        maven 'Maven3'
+    }
+        
+    environment {
+        registry = '220894557754.dkr.ecr.us-west-2.amazonaws.com/springboot-app'
+    }
+
+    stages {
+        stage('Git checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Ikechukwu980/microservice-eks-jenkins.git'
+            }
+        }
+        
+        stage('maven Unit test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        
+        stage('Integration Test') {
+            steps {
+                sh 'mvn verify -DskipUnitTest'
+            }
+        }
+        
+        stage('Checkstyle Code Analysis') {
+            steps {
+                sh 'mvn checkstyle:checkstyle'
+            }
+        }
+        
+        stage('SonarQube Scan') {
+            steps {
+                sh """
+                      mvn sonar:sonar \
+                     -Dsonar.projectKey=JavaWebApp \
+                     -Dsonar.host.url=http://34.221.195.62:9000 \
+                     -Dsonar.login=f36af2a997ea11bba6c4bb93f1af74c44f085e1e
+                """
+            }
+        }
+        
+        stage('maven build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+        
+        stage ('build image') {
+            steps {
+                script {
+                    docker.build registry
+                }
+            }
+        }
+        
+        stage('push to ECR') {
+            steps {
+                sh 'aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 220894557754.dkr.ecr.us-west-2.amazonaws.com'
+                sh 'docker push 220894557754.dkr.ecr.us-west-2.amazonaws.com/springboot-app:latest'
+            }
+        }
+        
+        stage('kubernetes deploy') {
+            steps {
+                withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'K8S', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
+                    sh 'ls'
+                    sh 'kubectl apply -f eks-deploy-k8s.yaml'
+                }
+            }
+        }
+    }
+}
