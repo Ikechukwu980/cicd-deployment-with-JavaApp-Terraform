@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Git checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Ikechukwu980/microservice-eks-jenkins.git'
+            }
+        }
+        stage('terraform init') {
+            steps {
+                dir('EKS-infra') {
+                    sh 'ls'
+                    sh 'terraform init'
+                }
+            }
+        }
+        stage('terraform validate') {
+            steps {
+                sh 'terraform validate'
+            }
+        }
+        stage('terraform plan') {
+            steps {
+                dir('EKS-infra') {
+                    sh 'terraform plan'
+                }
+            }
+        }
+        stage('terraform apply') {
+            steps {
+                dir('EKS-infra') {
+                    sh 'terraform apply -auto-approve'
+                }
+            }
+        }
+        
+        // stage('terraform destroy') {
+        //     steps {
+        //         dir('EKS-infra') {
+        //             sh 'terraform destroy -auto-approve'
+        //         }
+        //     }
+        // }
+    }
+}
