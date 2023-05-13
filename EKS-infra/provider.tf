@@ -4,17 +4,17 @@ terraform {
   required_providers {
     tls = {
       source  = "hashicorp/tls"
-      version = "~> 3.0"
+     # version = "~> 3.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = ">= 2.10"
+     # version = ">= 2.10"
     }
   }
 }
 
 provider "aws" {
-  version = ">= 3.72"
+#  version = ">= 3.72"
   region  = var.aws_region
 }
 
