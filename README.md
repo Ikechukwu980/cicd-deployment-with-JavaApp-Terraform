@@ -78,7 +78,7 @@ Append debian package repo address to the system
 	- sudo service docker stop 
 	-  sudo service docker start  
 
-# Step 6: install plug-ins inside your Jenkins GUI
+# Step 6: install plug-ins inside your Jenkins UI
          Navigate to manage Jenkins  and click manage plug-ins
 	- Select Available 
 	- Search for docker( select docker and docker pipeline)
