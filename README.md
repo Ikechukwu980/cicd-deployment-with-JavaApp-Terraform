@@ -85,7 +85,7 @@ sudo apt update && sudo apt install terraform `
 	- Search for Kubernetes ( Kubernetes cli )
 	- Install without restart.
 
-# Step 6: start building the Jenkins pipeline
+# Step 7: start building the Jenkins pipeline
 	 - Create maven3 variable under global tool configuration in Jenkins( to build the java file )
 	 - Navigate to manage Jenkins and click on global tool configuration
 	 - Scroll down and click on add maven
@@ -114,8 +114,11 @@ sudo apt update && sudo apt install terraform `
 
    - install helm chart to the Jenkins server
 	`curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3`
+	
 	`sudo chmod 700 get_helm.sh`
+	
 	`sudo ./get_helm.sh`
+	
 	`helm version --client`
 	
 ** to add the helm sable chart to my local **
