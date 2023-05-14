@@ -1,9 +1,10 @@
 # CICD with jenkins-maven-sonarqube-docker-Eks-Terraform-Promethues-Grafana
 # Step 1 ; launch a Jenkins server using AWS EC2 instance
- 	- Ubuntu
+ 	- Ubuntu 2
+	- Jenkins and Sonarqube servers
 	- Keypair
-	- Security group : SSH / Jenkins port 8080
-	- Instance type: T2 small
+	- Security group : SSH / Jenkins port 8080 and Sonarqube port 9000
+	- Instance type: T2 large for Jenkins and T2 medium for sonarqube
 	- Attach an IAM Role for EC2 : permission AdminFullAccess
 	- Launch the service and login to the instance via SSH
 
