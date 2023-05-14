@@ -71,10 +71,15 @@ sudo apt-get install jenkins`
 	` sudo systemctl status docker `
 
 ** add jenkins user to docker group **
+
 	` sudo usermod -a -G docker jenkins `
+	
 	` sudo service jenkins restart `
+	
 	` sudo systemctl daemon-reload `
+	
 	` sudo service docker stop `
+	
 	` sudo service docker start ` 
 
 # Step 6: install plug-ins inside your Jenkins UI
