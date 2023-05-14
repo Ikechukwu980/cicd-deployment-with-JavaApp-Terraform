@@ -37,17 +37,6 @@ Append debian package repo address to the system
    `sudo ./aws/install`
    `aws --version`
 
-** installing EKSCLI **
-  `curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp`
-   Move the extracted binary to /usr/local/bin. 
-  `sudo mv /tmp/eksctl /usr/local/bin`
-  `eksctl version`
-
-** installing Kubectl **
-  `sudo curl --silent --location -o /usr/local/bin/kubectl   https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl`
-
-** To give the kubectl file execution permission **
-  `sudo chmod +x /usr/local/bin/kubectl`
 
 ** Install Terraform **
 ` wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
@@ -56,10 +45,10 @@ sudo apt update && sudo apt install terraform `
 
 # Step 4
 	- sudo su - Jenkins
-** to view the kubeconfig file  **
-	- cat  /var/lib/jenkins/.kube/config
-	- Kubectl get nodes               ** view worker nodes **
-	- Kubectl get ns                      ** view namespaces **
+  ** to view the kubeconfig file  **
+	` cat  /var/lib/jenkins/.kube/config`
+	 ` Kubectl get nodes `              ** view worker nodes **
+	 ` Kubectl get ns `                    ** view namespaces **
 
 
 
