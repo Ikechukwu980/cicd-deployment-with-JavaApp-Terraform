@@ -1,4 +1,4 @@
-# microservice-eks-jenkins
+# CICD with jenkins-maven-sonarqube-docker-Eks-Terraform-Promethues-Grafana
 # Step 1 ; launch a Jenkins server using AWS EC2 instance
 	- Keypair
 	- Security group : SSH / Jenkins port 8080
@@ -53,7 +53,7 @@ Append debian package repo address to the system
 echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
 sudo apt update && sudo apt install terraform `
 
-# Step 
+# Step 4
 	- sudo su - Jenkins
 ** to view the kubeconfig file  **
 	- cat  /var/lib/jenkins/.kube/config
@@ -107,14 +107,60 @@ sudo apt update && sudo apt install terraform `
 
 ** create Jenkins pipeline
 	  - From Jenkins dashboard click on project
-	  - Name the job and click on pipeline and ok
-	  - Click on pipeline and select the dropdown to select hello world
-	  - First stage is (checkout)
-	  - Click on pipeline syntax at the bottom 
-	  - Select checkout with version control
-	  - Branch main and git url  paste it and click apply and save.
-	  - Second stage is ( build jar file )
+	  - Name the job and click on pipeline and then ok
 	
+	
+# Step 7, After the cluster is created we can setup the prometheus and grafana.
+        - install helm chart to the Jenkins server
+	`curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3`
+	`sudo chmod 700 get_helm.sh`
+	`sudo ./get_helm.sh`
+	`helm version --client`
+	
+** to add the helm sable chart to my local **
+	`helm repo add stable https://charts.helm.sh/stable`
+	
+** Add the prometheus repo 
+	`helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`
+	`helm search repo prometheus-community`
+** create prometheus namespace 
+	`kubectl create namespace prometheus`
+** install the kube-prometheus-stack
+	`helm install stable prometheus-community/kube-prometheus-stack -n prometheus`
+	`kubectl get pods -n prometheus`
+	`kubectl get svc -n prometheus`
+** Edit the prometheus and grafana service
+	`kubectl edit svc stable-kube-prometheus-sta-prometheus -n prometheus`
+	change the service to 'LoadBalancer'
+	`kubectl edit svc stable-grafana -n prometheus`
+	`kubectl get svc -n prometheus`
+
+# STEP 8, Access the Grafana UI in the browser
+ - copy the LoadBalancer URL and paste it on the browser
+ - UserName: admin
+ - password: prom-operator
+ 
+ ** create a dashboard in grafana
+ - Click '+' button on left panel and select ‘Import’.
+ - Enter 12740 dashboard id under Grafana.com Dashboard.
+ - Click ‘Load’.
+ - Select ‘Prometheus’ as the endpoint under prometheus data sources drop down.
+ - Click ‘Import’.
+
+ ** Create POD Monitoring Dashboard
+ - Click '+' button on left panel and select ‘Import’.
+ - Enter 6417 dashboard id under Grafana.com Dashboard.
+ - Click ‘Load’.
+ - Select ‘Prometheus’ as the endpoint under prometheus data sources drop down.
+ - Click ‘Import
+
+
+
+
+
+
+	
+
 	
 
 
