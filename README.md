@@ -60,13 +60,15 @@ sudo apt-get install jenkins`
 
 
 # Step 5: installing docker on the Jenkins server
+
 ** installing docker on the Jenkins server **
-` sudo apt install docker.io -y `
-` sudo usermod -aG docker $USER `
- - Exit and log back in
-` sudo systemctl start docker `
-` sudo systemctl enable docker `
-` sudo systemctl status docker `
+
+	` sudo apt install docker.io -y `
+	` sudo usermod -aG docker $USER `
+	 - Exit and log back in
+	` sudo systemctl start docker `
+	` sudo systemctl enable docker `
+	` sudo systemctl status docker `
 
 ** add jenkins user to docker group **
 ` sudo usermod -a -G docker jenkins `
