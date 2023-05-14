@@ -93,8 +93,6 @@ sudo apt-get install jenkins`
    	  After the cluster is created check the cluster
 	  
 	  `Kubectl get nodes`
-	  
-	 `cat /var/i\lib/jenkins/.kube/config`
 	 
 	  copy and store in a txt-file
 	  
