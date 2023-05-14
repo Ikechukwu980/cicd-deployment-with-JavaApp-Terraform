@@ -26,6 +26,7 @@ STEP 2
   
   ` echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check `.  
   output is, Kubectl:ok.
+  
   ` sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl `.
   
   ` chmod +x kubectl `.
