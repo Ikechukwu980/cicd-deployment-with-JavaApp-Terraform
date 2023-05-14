@@ -21,7 +21,7 @@ Append debian package repo address to the system
 /etc/apt/sources.list.d/jenkins.list > /dev/null`
  `sudo apt update`
  `sudo apt install Jenkins -y`
-** then access the Jenkins server via the server public_dns_name:8080
+** then access the Jenkins server via the server public_dns_name:8080 **
 - Get the initial password from the below file
 `sudo cat /var/lib/jenkins/secrets/initialAdminPassword`
 - Copy and paste in the browser
@@ -45,7 +45,7 @@ Append debian package repo address to the system
 ** installing Kubectl **
   `sudo curl --silent --location -o /usr/local/bin/kubectl   https://s3.us-west-2.amazonaws.com/amazon-eks/1.22.6/2022-03-09/bin/linux/amd64/kubectl`
 
-** To give the kubectl file execution permission
+** To give the kubectl file execution permission **
   `sudo chmod +x /usr/local/bin/kubectl`
 
 ** Install Terraform **
@@ -93,7 +93,7 @@ sudo apt update && sudo apt install terraform `
 	 - Maven_home : /usr/share/maven
 	 - Click save and apply
 
-** Create Credentials for connecting to Kubernetes Cluster using kubeconfig
+** Create Credentials for connecting to Kubernetes Cluster using kubeconfig **
    	  After the cluster is created check the cluster
 	  `Kubectl get nodes`
 	  Get cluster --name demo-eks --region us-east-1
@@ -105,14 +105,14 @@ sudo apt update && sudo apt install terraform `
       Add id and description k8s and k8s
 
 
-** create Jenkins pipeline
+** create Jenkins pipeline **
 	  - From Jenkins dashboard click on project
 	  - Name the job and click on pipeline and then ok
 	
 	
 # Step 8, After the cluster is created we can setup the prometheus and grafana.
 
-   - install helm chart to the Jenkins server
+   ** install helm chart to the Jenkins server **
    
 	`curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3`
 	
@@ -126,17 +126,17 @@ sudo apt update && sudo apt install terraform `
 
 	`helm repo add stable https://charts.helm.sh/stable`
 	
-** Add the prometheus repo 
+** Add the prometheus repo **
 
 	`helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`
 	
 	`helm search repo prometheus-community`
 	
-** create prometheus namespace 
+** create prometheus namespace **
 
 	`kubectl create namespace prometheus`
 	
-** install the kube-prometheus-stack
+** install the kube-prometheus-stack **
 
 	`helm install stable prometheus-community/kube-prometheus-stack -n prometheus`
 	
@@ -144,7 +144,7 @@ sudo apt update && sudo apt install terraform `
 	
 	`kubectl get svc -n prometheus`
 	
-** Edit the prometheus and grafana service
+** Edit the prometheus and grafana service **
 
 	`kubectl edit svc stable-kube-prometheus-sta-prometheus -n prometheus`
 	
