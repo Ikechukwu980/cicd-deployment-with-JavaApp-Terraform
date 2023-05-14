@@ -50,16 +50,7 @@ sudo apt-get install jenkins`
    
    `aws --version`
 
-# Step 4
-	- sudo su - Jenkins
-  ** to view the kubeconfig file  **
-	` cat  /var/lib/jenkins/.kube/config`
-	 ` Kubectl get nodes `              ** view worker nodes **
-	 ` Kubectl get ns `                    ** view namespaces **
-
-
-
-# Step 5: installing docker on the Jenkins server
+# Step 4: installing docker on the Jenkins server
 
 ** installing docker on the Jenkins server **
 
@@ -82,14 +73,14 @@ sudo apt-get install jenkins`
 	
 	` sudo service docker start ` 
 
-# Step 6: install plug-ins inside your Jenkins UI
+# Step 5: install plug-ins inside your Jenkins UI
      Navigate to manage Jenkins  and click manage plug-ins
 	- Select Available 
 	- Search for docker( select docker and docker pipeline)
 	- Search for Kubernetes ( Kubernetes cli )
 	- Install without restart.
 
-# Step 7: start building the Jenkins pipeline
+# Step 6: start building the Jenkins pipeline
 	 - Create maven3 variable under global tool configuration in Jenkins( to build the java file )
 	 - Navigate to manage Jenkins and click on global tool configuration
 	 - Scroll down and click on add maven
@@ -102,8 +93,6 @@ sudo apt-get install jenkins`
    	  After the cluster is created check the cluster
 	  
 	  `Kubectl get nodes`
-	  
-	  Get cluster --name demo-eks --region us-east-1
 	  
 	 `cat /var/i\lib/jenkins/.kube/config`
 	 
@@ -121,6 +110,16 @@ sudo apt-get install jenkins`
 ** create Jenkins pipeline **
 	  - From Jenkins dashboard click on project
 	  - Name the job and click on pipeline and then ok
+	  
+** Access the Sonarqube server with the public IP:9000 and click login
+	Username: admin
+	Password: admin
+	- select create a project 
+	- project: JavaWebApp
+	- Enter a name for your token: Jenkins and click generate and click continue
+	- select java and select maven
+	- copy the generated command and paste it on the Jenkinsfile at the sorna-scanner stage
+	
 	
 	
 # Step 8, After the cluster is created we can setup the prometheus and grafana.
