@@ -112,12 +112,19 @@ sudo apt-get install jenkins`
 	  - Name the job and click on pipeline and then ok
 	  
 ** Access the Sonarqube server with the public IP:9000 and click login
+
 	Username: admin
+	
 	Password: admin
+	
 	- select create a project 
+	
 	- project: JavaWebApp
+	
 	- Enter a name for your token: Jenkins and click generate and click continue
+	
 	- select java and select maven
+	
 	- copy the generated command and paste it on the Jenkinsfile at the sorna-scanner stage
 	
 	
