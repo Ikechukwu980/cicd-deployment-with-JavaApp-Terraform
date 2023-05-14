@@ -9,6 +9,9 @@ sudo apt update && sudo apt install terraform `
   ` sudo yum install -y yum-utils shadow-utils
   sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
   sudo yum -y install terraform `
+  
+  
+  
 STEP 2
   Install Kubectl
   `curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" `
@@ -18,6 +21,9 @@ STEP 2
   ` chmod +x kubectl `
   ` mkdir -p ~/.local/bin `
   ` mv ./kubectl ~/.local/bin/kubectl `
+  
+  
+  
 STEP 3 CREATE A JENKINS PIPELINE
   Navigate to the Jenkins UI and create a pipeline
   from the dashboard click on project, name the job select pipeline and click ok
