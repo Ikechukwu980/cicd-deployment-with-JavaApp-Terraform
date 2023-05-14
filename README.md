@@ -7,41 +7,52 @@
 	- Attach an IAM Role for EC2 : permission AdminFullAccess
 	- Launch the service and login to the instance via SSH
 
-# Step 2 ; installation of required software 
+# Step 2 ; installation of required software
+
  `sudo hostname Jenkins`
+ 
  `sudo apt update`
+ 
  `sudo apt install maven -y`
+ 
 ** Jenkins setup **
+
 - Add Repository key to the system
+
 `curl -fsSL https://pkg.jenkins.io/debian/jenkins.io-2023.key | sudo tee \
 /usr/share/keyrings/jenkins-keyring.asc > /dev/null`
 	
 Append debian package repo address to the system
+
 `echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
  https://pkg.jenkins.io/debian binary/ | sudo tee \
 /etc/apt/sources.list.d/jenkins.list > /dev/null`
+
  `sudo apt update`
+ 
  `sudo apt install Jenkins -y`
+ 
 ** then access the Jenkins server via the server public_dns_name:8080 **
+
 - Get the initial password from the below file
+
 `sudo cat /var/lib/jenkins/secrets/initialAdminPassword`
-- Copy and paste in the browser
-- Click install plug-ins
-- Create username and password 
-- Click save and finish.
+
+	- Copy and paste in the browser
+	- Click install plug-ins
+	- Create username and password 
+	- Click save and finish.
 
 # Step 3: install AWS CLI 
   `curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" `
+  
    `sudo apt install unzip`
-   `sudo unzip awscliv2.zip`  
+   
+   `sudo unzip awscliv2.zip`
+   
    `sudo ./aws/install`
+   
    `aws --version`
-
-
-** Install Terraform **
-` wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-sudo apt update && sudo apt install terraform `
 
 # Step 4
 	- sudo su - Jenkins
