@@ -111,28 +111,43 @@ sudo apt update && sudo apt install terraform `
 	
 	
 # Step 7, After the cluster is created we can setup the prometheus and grafana.
-        - install helm chart to the Jenkins server
+
+   - install helm chart to the Jenkins server
 	`curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3`
 	`sudo chmod 700 get_helm.sh`
 	`sudo ./get_helm.sh`
 	`helm version --client`
 	
 ** to add the helm sable chart to my local **
+
 	`helm repo add stable https://charts.helm.sh/stable`
 	
 ** Add the prometheus repo 
+
 	`helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`
+	
 	`helm search repo prometheus-community`
+	
 ** create prometheus namespace 
+
 	`kubectl create namespace prometheus`
+	
 ** install the kube-prometheus-stack
+
 	`helm install stable prometheus-community/kube-prometheus-stack -n prometheus`
+	
 	`kubectl get pods -n prometheus`
+	
 	`kubectl get svc -n prometheus`
+	
 ** Edit the prometheus and grafana service
+
 	`kubectl edit svc stable-kube-prometheus-sta-prometheus -n prometheus`
+	
 	change the service to 'LoadBalancer'
+	
 	`kubectl edit svc stable-grafana -n prometheus`
+	
 	`kubectl get svc -n prometheus`
 
 # STEP 8, Access the Grafana UI in the browser
