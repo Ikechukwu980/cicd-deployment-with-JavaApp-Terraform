@@ -43,3 +43,20 @@ STEP 3 CREATE A JENKINS PIPELINE.
   
   from the dashboard click on project, name the job select pipeline and click ok.
   
+  
+  
+  STEP 4 AFTER THE EKS CLUSTER IS CREATED,
+  
+  Copy the kubeconfig file to ~/.kube/config
+  
+  This command will update the kubeconfig file into the default location ~/.kube/config
+  
+  `aws eks update-kubeconfig --name <cluster_name> `
+  
+  `kubectl get nodes` 
+  
+  `kubectl get all `
+  
+  `kubectl get cluster --name <name of cluster> --region us-west-2`
+
+  
