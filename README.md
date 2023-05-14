@@ -110,9 +110,10 @@ sudo apt update && sudo apt install terraform `
 	  - Name the job and click on pipeline and then ok
 	
 	
-# Step 7, After the cluster is created we can setup the prometheus and grafana.
+# Step 8, After the cluster is created we can setup the prometheus and grafana.
 
    - install helm chart to the Jenkins server
+   
 	`curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3`
 	
 	`sudo chmod 700 get_helm.sh`
