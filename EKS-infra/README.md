@@ -3,14 +3,14 @@
   
   
   # Terraform For Ubuntu/Debian.
-   ` sudo apt install curl`
-   ` curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -`
-   ` sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"`
-   ` sudo apt update `
-   ` sudo apt-get install terraform `
-   ` terraform --version`
+   -  sudo apt install curl
+   - curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+   - sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+   - sudo apt update 
+   - sudo apt-get install terraform 
+   - terraform --version
 
-  Terraform For Amazon Linux.
+ # Terraform For Amazon Linux.
   
   ` sudo yum install -y yum-utils shadow-utils
   sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
