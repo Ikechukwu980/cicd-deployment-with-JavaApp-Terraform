@@ -1,7 +1,6 @@
 # STEP 1
- # Install Terrafrom and Kubectl in the Jenkins srever.
-  
-  
+ # Installing Terrafrom,Kubectl and Checkov scan in the Jenkins server.
+ 
   # Terraform For Ubuntu/Debian.
    -  sudo apt install curl
    - curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
@@ -16,8 +15,6 @@
   sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
   sudo yum -y install terraform
   
-  
-  
 # STEP 2
 
  # Install Kubectl.
@@ -30,6 +27,14 @@
   - chmod +x kubectl 
   - mkdir -p ~/.local/bin 
   - mv ./kubectl ~/.local/bin/kubectl
+
+# Install Checkov 
+ - sudo apt update
+ - sudo apt install software-properties-common
+ - sudo add-apt-repository ppa:deadsnakes/ppa
+ - sudo apt install python3.7
+ - sudo apt install python3-pip
+ - sudo python3.7 -m pip install -U checkov #to install or upgrade checkov)
   
   # STEP 3 CREATE A JENKINS PIPELINE.
  # Navigate to the Jenkins UI and create a pipeline.
