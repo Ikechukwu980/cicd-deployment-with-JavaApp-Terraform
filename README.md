@@ -156,7 +156,7 @@ sudo apt-get install jenkins`
 ### Step 8: GitHub webhook
 
 1) #### Add jenkins webhook to github
-    - Access your repo **devops-fully-automated-infra** on github
+    - Access your repo **cicd-deployment-with-JavaApp-Terraform** on github
     - Goto Settings --> Webhooks --> Click on Add webhook 
     - Payload URL: **htpp://REPLACE-JENKINS-SERVER-PUBLIC-IP:8080/github-webhook/**             (Note: The IP should be public as GitHub is outside of the AWS VPC where Jenkins server is hosted)
     - Click on Add webhook
