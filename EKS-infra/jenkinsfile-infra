@@ -1,6 +1,6 @@
 def COLOR_MAP = [
-    'SUCCESS': 'good', 
-    'FAILURE': 'danger',
+    SUCCESS: 'good',
+    FAILURE: 'danger'
 ]
 
 pipeline {
@@ -12,6 +12,14 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Ikechukwu980/microservice-eks-jenkins.git'
             }
         }
+
+        stage('Verify Terraform Version') {
+            steps {
+                echo 'Verifying the Terraform version'
+                sh 'terraform --version'
+            }
+        }
+
         stage('terraform init') {
             steps {
                 dir('EKS-infra') {
@@ -20,11 +28,13 @@ pipeline {
                 }
             }
         }
+
         stage('terraform validate') {
             steps {
                 sh 'terraform validate'
             }
         }
+
         stage('terraform plan') {
             steps {
                 dir('EKS-infra') {
@@ -32,6 +42,23 @@ pipeline {
                 }
             }
         }
+
+        stage('Checkov scan') {
+            steps {
+                sh '''
+                checkov -d .
+                #checkov -d . --skip-check CKV_AWS_23,CKV_AWS_24,CKV_AWS_126,CKV_AWS_135,CKV_AWS_8,CKV_AWS_23,CKV_AWS_24
+                #checkov -d . --skip-check CKV_AWS*
+                '''
+            }
+        }
+
+        stage('Manual Approval') {
+            steps {
+                input 'Approval required for deployment'
+            }
+        }
+
         stage('terraform apply') {
             steps {
                 dir('EKS-infra') {
@@ -40,12 +67,15 @@ pipeline {
             }
         }
     }
+
     post {
-      always {
-          echo 'Slack Notifications'
-          slackSend channel: '#ikechukwu-jenkins-cicd-pipeline-alerts', //update and provide your channel name
-          color: COLOR_MAP[currentBuild.currentResult],
-          message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
+        always {
+            echo 'I will always say Hello again!'
+            slackSend(
+                channel: '#team-devops',
+                color: COLOR_MAP[currentBuild.currentResult.toString()],
+                message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\nMore info at: ${env.BUILD_URL}"
+            )
         }
     }
 }
