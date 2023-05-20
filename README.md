@@ -23,56 +23,43 @@
 echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
   https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
   /etc/apt/sources.list.d/jenkins.list > /dev/null
-sudo apt-get update
-sudo apt-get install jenkins`
-
-` systemctl status jenkins `
- 
-#### then access the Jenkins server via the server public_dns_name:8080 **
-
+- sudo apt-get update
+- sudo apt-get install jenkins
+- systemctl status jenkins 
+#### then access the Jenkins server via the server public_dns_name:8080
 - Get the initial password from the below file
 
-`sudo cat /var/lib/jenkins/secrets/initialAdminPassword`
-
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 	- Copy and paste in the browser
 	- Click install plug-ins
 	- Create username and password 
 	- Click save and finish.
 
 # Step 3: install AWS CLI 
-  `curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" `
-  
-   `sudo apt install unzip`
-   
-   `sudo unzip awscliv2.zip`
-   
-   `sudo ./aws/install`
-   
-   `aws --version`
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+ - sudo apt install unzip 
+ - sudo unzip awscliv2.zip 
+ - sudo ./aws/install
+ - aws --version
 
 # Step 4: installing docker on the Jenkins server
    # installing docker on the Jenkins server 
 
-	` sudo apt install docker.io -y `
-	` sudo usermod -aG docker $USER `
-	 - Exit and log back in
-	` sudo systemctl start docker `
-	` sudo systemctl enable docker `
-	` sudo systemctl status docker `
+   - sudo apt install docker.io -y 
+   - sudo usermod -aG docker $USER 
+  Exit and log back in
+  - sudo systemctl start docker 
+  - sudo systemctl enable docker 
+  - sudo systemctl status docker 
 
-#### add jenkins user to docker group **
+#### add jenkins user to docker group 
 
-	` sudo usermod -a -G docker jenkins `
+ - sudo usermod -a -G docker jenkins 
+ - sudo service jenkins restart 
+ - sudo systemctl daemon-reload 
+ - sudo service docker stop 
+ - sudo service docker start 
 	
-	` sudo service jenkins restart `
-	
-	` sudo systemctl daemon-reload `
-	
-	` sudo service docker stop `
-	
-	` sudo service docker start ` 
-	
-# Install Tertaform in the Jenkins server
 
 
 # Step 5: install plug-ins inside your Jenkins UI
