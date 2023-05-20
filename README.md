@@ -16,7 +16,7 @@
  
  `sudo apt install maven -y`
  
-** Jenkins setup **
+#### Jenkins setup **
 
 `curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
   /usr/share/keyrings/jenkins-keyring.asc > /dev/null
@@ -28,7 +28,7 @@ sudo apt-get install jenkins`
 
 ` systemctl status jenkins `
  
-** then access the Jenkins server via the server public_dns_name:8080 **
+#### then access the Jenkins server via the server public_dns_name:8080 **
 
 - Get the initial password from the below file
 
@@ -52,7 +52,7 @@ sudo apt-get install jenkins`
 
 # Step 4: installing docker on the Jenkins server
 
-** installing docker on the Jenkins server **
+#### installing docker on the Jenkins server **
 
 	` sudo apt install docker.io -y `
 	` sudo usermod -aG docker $USER `
@@ -61,7 +61,7 @@ sudo apt-get install jenkins`
 	` sudo systemctl enable docker `
 	` sudo systemctl status docker `
 
-** add jenkins user to docker group **
+#### add jenkins user to docker group **
 
 	` sudo usermod -a -G docker jenkins `
 	
@@ -87,8 +87,28 @@ sudo apt-get install jenkins`
 	 - Name: maven3
 	 - Maven_home : /usr/share/maven
 	 - Click save and apply
+ #### Pipeline creation
+    - Click on **New Item**
+    - Enter an item name: **app-infra-pipeline** & select the category as **Pipeline**
+    - Now scroll-down and in the Pipeline section --> Definition --> Select Pipeline script from SCM
+    
+# Step 7: Credentials setup(Slack):
+   - Click on Manage Jenkins --> Manage Credentials --> Global credentials (unrestricted) --> Add Credentials
+       1)  ###### Slack secret token (slack-token)
+            - Kind: Secret text            
+            - Secret: 3jrfd3GjdMac0dgcxJwcOgQU
+            - ID: slack-token
+            - Description: slack-token
+            - Click on Create                
 
-** Create Credentials for connecting to Kubernetes Cluster using kubeconfig **
+     2)  #### Configure system:
+            - Click on Manage Jenkins --> Configure System
+
+            1)  - Go to section Slack
+                - Workspace: **devops-fully-automated** (if not working try with Team-subdomain devopsfullyau-r0x2686)
+                - Credentials: select the slack-token credentials (created above) from the drop-down    
+
+#### Create Credentials for connecting to Kubernetes Cluster using kubeconfig **
 
    	  After the cluster is created check the cluster
 	  
@@ -102,16 +122,21 @@ sudo apt-get install jenkins`
 	  
 	  Select Secret file and select the file we just cpy
 	  
-      Add id and description k8s and k8s
+        Add id and description k8s and k8s
 
 
-** create Jenkins pipeline **
-
-	  - From Jenkins dashboard click on project
+#### Pipeline creation ????????????? need to review
+    - Click on **New Item**
+    - Enter an item name: **app-infra-pipeline** & select the category as **Pipeline**
+    - Now scroll-down and in the Pipeline section --> Definition --> Select Pipeline script from SCM
+    - SCM: **Git**
+    - Repositories
+        - Repository URL: FILL YOUR OWN REPO URL (that we created by importing in the first step)
+        - Branch Specifier (blank for 'any'): */main
+        - Script Path: Jenkinsfile
+    - Save
 	  
-	  - Name the job and click on pipeline and then ok
-	  
-** Access the Sonarqube server with the public IP:9000 and click login
+#### Access the Sonarqube server with the public IP:9000 and click login
 
 	Username: admin
 	
@@ -128,10 +153,26 @@ sudo apt-get install jenkins`
 	- copy the generated command and paste it on the Jenkinsfile at the sorna-scanner stage
 	
 	
+### Step 8: GitHub webhook
+
+1) #### Add jenkins webhook to github
+    - Access your repo **devops-fully-automated-infra** on github
+    - Goto Settings --> Webhooks --> Click on Add webhook 
+    - Payload URL: **htpp://REPLACE-JENKINS-SERVER-PUBLIC-IP:8080/github-webhook/**             (Note: The IP should be public as GitHub is outside of the AWS VPC where Jenkins server is hosted)
+    - Click on Add webhook
+
+2) #### Configure on the Jenkins side to pull based on the event
+    - Access your jenkins server, pipeline **app-infra-pipeline**
+    - Once pipeline is accessed --> Click on Configure --> In the General section --> **Select GitHub project checkbox** and fill your repo URL of the project devops-fully-automated.
+    - Scroll down --> In the Build Triggers section -->  **Select GitHub hook trigger for GITScm polling checkbox**
+
+Once both the above steps are done click on Save.
+	
+	
 	
 # Step 8, After the cluster is created we can setup the prometheus and grafana.
 
-   ** install helm chart to the Jenkins server **
+#### install helm chart to the Jenkins server **
    
 	`curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3`
 	
@@ -141,21 +182,21 @@ sudo apt-get install jenkins`
 	
 	`helm version --client`
 	
-** to add the helm sable chart to my local **
+#### to add the helm sable chart to my local **
 
 	`helm repo add stable https://charts.helm.sh/stable`
 	
-** Add the prometheus repo **
+#### Add the prometheus repo **
 
 	`helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`
 	
 	`helm search repo prometheus-community`
 	
-** create prometheus namespace **
+#### create prometheus namespace **
 
 	`kubectl create namespace prometheus`
 	
-** install the kube-prometheus-stack **
+#### install the kube-prometheus-stack **
 
 	`helm install stable prometheus-community/kube-prometheus-stack -n prometheus`
 	
@@ -163,7 +204,7 @@ sudo apt-get install jenkins`
 	
 	`kubectl get svc -n prometheus`
 	
-** Edit the prometheus and grafana service **
+#### Edit the prometheus and grafana service **
 
 	`kubectl edit svc stable-kube-prometheus-sta-prometheus -n prometheus`
 	
@@ -173,24 +214,24 @@ sudo apt-get install jenkins`
 	
 	`kubectl get svc -n prometheus`
 
-# STEP 8, Access the Grafana UI in the browser
- - copy the LoadBalancer URL and paste it on the browser
- - UserName: admin
- - password: prom-operator
+# STEP 9, Access the Grafana UI in the browser
+	 - copy the LoadBalancer URL and paste it on the browser
+	 - UserName: admin
+	 - password: prom-operator
  
- ** create a dashboard in grafana
- - Click '+' button on left panel and select ‘Import’.
- - Enter 12740 dashboard id under Grafana.com Dashboard.
- - Click ‘Load’.
- - Select ‘Prometheus’ as the endpoint under prometheus data sources drop down.
- - Click ‘Import’.
+#### create a dashboard in grafana
+	 - Click '+' button on left panel and select ‘Import’.
+	 - Enter 12740 dashboard id under Grafana.com Dashboard.
+	 - Click ‘Load’.
+	 - Select ‘Prometheus’ as the endpoint under prometheus data sources drop down.
+	 - Click ‘Import’.
 
- ** Create POD Monitoring Dashboard
- - Click '+' button on left panel and select ‘Import’.
- - Enter 6417 dashboard id under Grafana.com Dashboard.
- - Click ‘Load’.
- - Select ‘Prometheus’ as the endpoint under prometheus data sources drop down.
- - Click ‘Import
+#### Create POD Monitoring Dashboard
+	 - Click '+' button on left panel and select ‘Import’.
+	 - Enter 6417 dashboard id under Grafana.com Dashboard.
+	 - Click ‘Load’.
+	 - Select ‘Prometheus’ as the endpoint under prometheus data sources drop down.
+	 - Click ‘Import
 
 
 
