@@ -1,8 +1,8 @@
-STEP 1
-  Install Terrafrom and Kubectl in the Jenkins srever.
+# STEP 1
+ # Install Terrafrom and Kubectl in the Jenkins srever.
   
   
-   Terraform For Ubuntu/Debian.
+  # Terraform For Ubuntu/Debian.
    ` sudo apt install curl`
    ` curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -`
    ` sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"`
