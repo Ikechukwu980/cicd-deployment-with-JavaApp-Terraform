@@ -51,8 +51,7 @@ sudo apt-get install jenkins`
    `aws --version`
 
 # Step 4: installing docker on the Jenkins server
-
-#### installing docker on the Jenkins server **
+   # installing docker on the Jenkins server 
 
 	` sudo apt install docker.io -y `
 	` sudo usermod -aG docker $USER `
@@ -72,6 +71,9 @@ sudo apt-get install jenkins`
 	` sudo service docker stop `
 	
 	` sudo service docker start ` 
+	
+# Install Tertaform in the Jenkins server
+
 
 # Step 5: install plug-ins inside your Jenkins UI
      Navigate to manage Jenkins  and click manage plug-ins
