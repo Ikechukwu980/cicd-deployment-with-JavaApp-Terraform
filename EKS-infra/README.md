@@ -29,30 +29,30 @@
   - sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl 
   - chmod +x kubectl 
   - mkdir -p ~/.local/bin 
-  - mv ./kubectl ~/.local/bin/kubectl `.
+  - mv ./kubectl ~/.local/bin/kubectl
+  
+  # STEP 3 CREATE A JENKINS PIPELINE.
+ # Navigate to the Jenkins UI and create a pipeline.
+    - Click on **New Item**
+    - Enter an item name: **infra-pipeline** & select the category as **Pipeline**
+    - Now scroll-down and in the Pipeline section --> Definition --> Select Pipeline script from SCM
+    - SCM: **Git**
+    - Repositories
+        - Repository URL: FILL YOUR OWN REPO URL (that we created by importing in the first step)
+        - Branch Specifier (blank for 'any'): */main
+        - Script Path: Jenkinsfile
+    - Save
   
   
   
-STEP 3 CREATE A JENKINS PIPELINE.
-
-  Navigate to the Jenkins UI and create a pipeline.
+  # STEP 4 AFTER THE EKS CLUSTER IS CREATED,
   
-  from the dashboard click on project, name the job select pipeline and click ok.
+   - Copy the kubeconfig file to ~/.kube/config
   
-  
-  
-  STEP 4 AFTER THE EKS CLUSTER IS CREATED,
-  
-  Copy the kubeconfig file to ~/.kube/config
-  
-  This command will update the kubeconfig file into the default location ~/.kube/config
-  
-  `aws eks update-kubeconfig --name <cluster_name> `
-  
-  `kubectl get nodes` 
-  
-  `kubectl get all `
-  
-  `kubectl get cluster --name <name of cluster> --region us-west-2`
+  # This command will update the kubeconfig file into the default location ~/.kube/config
+  - aws eks update-kubeconfig --name <cluster_name> 
+  - kubectl get nodes
+  - kubectl get all 
+  - kubectl get cluster --name <name of cluster> --region us-west-2
 
   
