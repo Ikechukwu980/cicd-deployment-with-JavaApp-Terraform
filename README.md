@@ -106,7 +106,9 @@ sudo apt-get install jenkins`
 
 
 ** create Jenkins pipeline **
+
 	  - From Jenkins dashboard click on project
+	  
 	  - Name the job and click on pipeline and then ok
 	  
 ** Access the Sonarqube server with the public IP:9000 and click login
