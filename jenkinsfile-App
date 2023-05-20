@@ -66,6 +66,12 @@ pipeline {
             }
         }
         
+        stage('Manual Approval') {
+            steps {
+                input 'Approval required for deployment'
+            }
+        }
+        
         stage('kubernetes deploy') {
             steps {
                 withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'K8S', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
@@ -73,6 +79,17 @@ pipeline {
                     sh 'kubectl apply -f eks-deploy-k8s.yaml'
                 }
             }
+        }
+    }
+    
+    post {
+        always {
+            echo 'I will always say Hello again!'
+            slackSend(
+                channel: '#team-devops',
+                color: COLOR_MAP[currentBuild.currentResult.toString()],
+                message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\nMore info at: ${env.BUILD_URL}"
+            )
         }
     }
 }
