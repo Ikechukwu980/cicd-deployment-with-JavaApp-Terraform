@@ -1,6 +1,11 @@
+def COLOR_MAP = [
+    SUCCESS: 'good',
+    FAILURE: 'danger'
+]
+
 pipeline {
     agent any
-    
+
     tools {
         maven 'Maven3'
     }
@@ -16,7 +21,7 @@ pipeline {
             }
         }
         
-        stage('maven Unit test') {
+        stage('maven Unit Test') {
             steps {
                 sh 'mvn test'
             }
@@ -36,12 +41,12 @@ pipeline {
         
         stage('SonarQube Scan') {
             steps {
-                sh """
-                      mvn sonar:sonar \
-                      -Dsonar.projectKey=JavaWebApp \
-                      -Dsonar.host.url=http://18.246.42.64:9000 \
-                      -Dsonar.login=d72a58297f59cbb9e2dfde512826cbfe084d8762
-                """
+                sh '''
+                mvn sonar:sonar \
+                -Dsonar.projectKey=JavaWebApp \
+                -Dsonar.host.url=http://54.218.51.246:9000 \
+                -Dsonar.login=8a8b813c83e0c6974c35c2216510dae4dfdebc38
+                '''
             }
         }
         
@@ -86,7 +91,7 @@ pipeline {
         always {
             echo 'I will always say Hello again!'
             slackSend(
-                channel: '#team-devops',
+                channel: "#ikechukwu-devops",
                 color: COLOR_MAP[currentBuild.currentResult.toString()],
                 message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\nMore info at: ${env.BUILD_URL}"
             )
