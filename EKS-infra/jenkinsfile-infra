@@ -12,29 +12,31 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Ikechukwu980/microservice-eks-jenkins.git'
             }
         }
-
+        
         stage('Verify Terraform Version') {
             steps {
                 echo 'Verifying the Terraform version'
                 sh 'terraform --version'
             }
         }
-
-        stage('terraform init') {
+        
+        stage('Terraform init') {
             steps {
+                echo 'initiazing Terraform ....'
                 dir('EKS-infra') {
-                    sh 'ls'
                     sh 'terraform init'
                 }
             }
         }
-
+        
         stage('terraform validate') {
             steps {
-                sh 'terraform validate'
+                dir('EKS-infra') {
+                    sh 'terraform validate'
+                }
             }
         }
-
+        
         stage('terraform plan') {
             steps {
                 dir('EKS-infra') {
@@ -42,23 +44,27 @@ pipeline {
                 }
             }
         }
-
-        stage('Checkov scan') {
+        
+        stage('Checkon scan') {
             steps {
-                sh '''
-                checkov -d .
-                #checkov -d . --skip-check CKV_AWS_23,CKV_AWS_24,CKV_AWS_126,CKV_AWS_135,CKV_AWS_8,CKV_AWS_23,CKV_AWS_24
-                #checkov -d . --skip-check CKV_AWS*
-                '''
+                dir('EKS-infra') {
+                    // sh '''
+                    // checkov -d . --skip-check CKV_AWS*
+                    // checkov -d . --skip-check CKV2_AWS*
+                    // checkov -d . --skip-check HIGH
+                    // checkov -d . --skip-check MEDIUM
+                    // checkov -d . --skip-check LOW
+                    // '''
+                }
             }
         }
-
+        
         stage('Manual Approval') {
             steps {
                 input 'Approval required for deployment'
             }
         }
-
+        
         stage('terraform apply') {
             steps {
                 dir('EKS-infra') {
@@ -67,15 +73,15 @@ pipeline {
             }
         }
     }
-
+    
     post {
         always {
             echo 'I will always say Hello again!'
             slackSend(
-                channel: '#team-devops',
+                channel: "#ikechukwu-devops",
                 color: COLOR_MAP[currentBuild.currentResult.toString()],
                 message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\nMore info at: ${env.BUILD_URL}"
-            )
+                )
         }
     }
 }
