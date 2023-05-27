@@ -80,5 +80,5 @@ resource "aws_flow_log" "demo" {
   log_destination   = "arn:aws:logs:us-west-2:220894557754:log-group:/vpc-flow-logs"
   log_destination_type = "cloud-watch-logs"
   traffic_type      = "ALL"
-  vpc_id            = aws_vpc.demo[count.index].id
+  vpc_id            = aws_vpc.demo.id
 }
