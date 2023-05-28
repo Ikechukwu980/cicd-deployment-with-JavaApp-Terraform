@@ -47,7 +47,9 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
    - sudo apt install docker.io -y 
    - sudo usermod -aG docker $USER 
+   
   Exit and log back in
+  
   - sudo systemctl start docker 
   - sudo systemctl enable docker 
   - sudo systemctl status docker 
