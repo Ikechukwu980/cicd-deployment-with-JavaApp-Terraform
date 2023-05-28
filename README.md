@@ -167,6 +167,8 @@ Once both the above steps are done click on Save.
 	
 # Step 8, After the cluster is created we can setup the prometheus and grafana.
 
+![promethue new](https://github.com/Ikechukwu980/cicd-deployment-with-JavaApp-Terraform/assets/106882590/e90cbae6-5786-4371-8085-a0822b463282)
+
 #### install helm chart to the Jenkins server **
    
 	`curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3`
