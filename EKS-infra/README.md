@@ -1,6 +1,8 @@
 # STEP 1
  # Installing Terrafrom,Kubectl and Checkov scan in the Jenkins server.
  
+ ![Infra diagram](https://github.com/Ikechukwu980/cicd-deployment-with-JavaApp-Terraform/assets/106882590/e891883e-3160-42e4-9653-6d88eb1c3905)
+ 
   # Terraform For Ubuntu/Debian.
    -  sudo apt install curl
    - curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
